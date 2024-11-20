@@ -1,0 +1,390 @@
+/* Общие стили для страницы */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Стили для шапки страницы */
+header {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  padding: 8px;
+  border: 2px solid rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
+  box-sizing: border-box;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  margin-bottom: 0; /* Убираем отступ снизу */
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-size: 1.25rem;
+  font-weight: bolder;
+  color: #000;
+  margin-right: 16px;
+}
+
+.mega {
+  background-color: #ffeb3b;
+  padding: 8px;
+  border: 1px solid #ffeb3b;
+  margin-right: 4px;
+  color: #000;
+  border-radius: 0;
+  font-weight: bolder;
+  letter-spacing: 0.5px;
+}
+
+.bonus {
+  color: #000;
+  font-weight: bolder;
+}
+
+p {
+  font-size: 0.9rem;
+  color: #000;
+  margin: 0;
+}
+
+/* Стили для breadcrumb */
+.custom-breadcrumb {
+  position: relative; /* Устанавливаем относительное позиционирование */
+  z-index: 15; /* Выше, чем поисковая строка (10) */
+  margin-top: 80px; /* Расстояние сверху */
+  margin-bottom: 16px; /* Отступ снизу */
+}
+
+.custom-breadcrumb .breadcrumb {
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+}
+
+.custom-breadcrumb .breadcrumb-item {
+  display: inline;
+}
+
+.custom-breadcrumb .breadcrumb-item + .breadcrumb-item::before {
+  content: " / ";
+  padding: 0 5px;
+  color: #000000;
+}
+
+.custom-breadcrumb .breadcrumb-item a {
+  text-decoration: none;
+  color: #ffae00;
+}
+
+.custom-breadcrumb .breadcrumb-item a:hover {
+  color: #000000;
+}
+
+
+/* Строка поиска */
+.search-container {
+  position: fixed; /* Закрепляем поле поиска */
+  top: 80px; /* Расстояние от верхнего края */
+  left: 50%; /* Центрируем по горизонтали */
+  transform: translateX(-50%); /* Центрирование */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  padding: 0 16px;
+  box-sizing: border-box;
+  z-index: 15; /* Ниже хлебных крошек */
+  border-radius: 8px;
+}
+
+.search-container input {
+  padding: 12px;
+  border-radius: 4px 0 0 4px;
+  width: 700px; /* Ширина поля ввода */
+  border: 1px solid #ffeb3b;
+  border-right: none; /* Убираем правую границу, чтобы не дублировать с кнопкой */
+}
+
+.search-container button {
+  padding: 12px 16px;
+  background-color: #ffeb3b;
+  border-radius: 0 4px 4px 0;
+  border: 1px solid #ffeb3b;
+  cursor: pointer;
+}
+
+.search-container button:hover {
+  background-color: #fdd835;
+  border-color: #fdd835;
+}
+
+/* Контент */
+#content {
+  text-align: center;
+  margin: 180px 0 20px; /* Убираем пространство под строку поиска */
+  width: 100%;
+}
+
+/* Стили для контейнера карточек */
+.cards-container {
+  margin-top: 45px;
+  display: flex;
+  flex-wrap: wrap; /* Карточки переносятся на следующую строку */
+  gap: 20px;
+  justify-content: flex-start;
+  padding-left: 20px;
+  box-sizing: border-box;
+  
+  /* Устанавливаем фиксированную высоту */
+  height: 600px; /* Подберите высоту под ваш макет */
+  overflow-y: auto; /* Добавляем вертикальную прокрутку, если карточек больше */
+  
+  /* Для видимости скроллбара */
+  scroll-behavior: smooth; 
+}
+
+/* Для стилизации полосы прокрутки (необязательно) */
+.cards-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.cards-container::-webkit-scrollbar-thumb {
+  background-color: #ffeb3b; /* Цвет скроллбара */
+  border-radius: 4px;
+}
+
+.cards-container::-webkit-scrollbar-thumb:hover {
+  background-color: #fdd835;
+}
+
+/* Карточки */
+.card {
+  width: 330px; /* Фиксированная ширина карточки */
+  height: 270px; /* Устанавливаем фиксированную высоту карточки */
+  max-width: 100%; /* Ограничиваем максимальную ширину карточки */
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ffeb3b;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  position: relative;
+  margin-bottom: 20px; /* Отступ снизу для карточек */
+}
+
+/* Контейнер для изображения карточки */
+.card-image-container {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+/* Изображение карточки */
+.card-image {
+  width: 215px;
+  height: 90px;
+  object-fit: contain;
+  margin-top: 35px;
+}
+
+/* Название карточки */
+.card h3 {
+  margin: 10px 0;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+/* Информация в карточке */
+.card p {
+  font-size: 1rem;
+  color: #666;
+}
+
+/* Полная кликабельность карточки */
+.card a {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  text-decoration: none;
+}
+
+/* Кнопка внутри карточки */
+.card .add-to-cashback-button {
+  position: relative;
+  z-index: 1;
+  margin-top: auto;
+}
+
+/* Стили для формы поиска */
+.container-fluid, .container, .row {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Стили для формы поиска */
+form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%; /* Занимает всю ширину контейнера */
+}
+
+/* Строка поиска */
+form input {
+  padding: 12px;
+  width: 100%;
+  max-width: 100%; /* Максимальная ширина */
+  border: 1px solid #ffeb3b;
+  border-radius: 4px 0 0 4px;
+  outline: none;
+  border-right: none;
+  height: 24px;
+  text-align: center;
+}
+
+/* Кнопка поиска */
+form button {
+  padding: 12px 20px;
+  background-color: #ffeb3b;
+  color: #000;
+  border: 1px solid #ffeb3b;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  margin-left: -1px;
+  font-size: 16px;
+  height: 50px;
+}
+
+/* Изменение цвета кнопки при наведении */
+form button:hover {
+  background-color: #fdd835;
+  border-color: #fdd835;
+}
+
+/* Убираем лишние отступы */
+.search-input {
+  margin-right: 0;
+}
+
+.search-button {
+  height: 50px;
+  display: inline-block;
+  margin-left: -1px;
+}
+
+/* Стили для футера */
+.footer {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.cashback-page {
+  padding-top: 100px; /* Чтобы контент не перекрывал шапку */
+}
+
+.cashback-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: 50px auto;
+  width: 600px; /* Фиксированная ширина */
+  height: 380px; /* Фиксированная высота */
+  padding: 30px;
+  max-width: 800px;
+  border: 2px solid #ffeb3b;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  margin-left: 385px; /* Добавляем отступ слева */
+}
+
+.cashback-det-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.cashback-det-image {
+  width: 80%; /* Задаем ширину в процентах от родительского элемента */
+  max-width: 300px; /* Максимальная ширина изображения */
+  height: 150px; /* Фиксированная высота */
+  object-fit: contain; /* Изображение сохраняет пропорции и полностью помещается в контейнер */
+  display: block; /* Устраняет лишние отступы */
+  margin: 0 auto; /* Центрируем изображение */
+}
+
+.cashback-det-info {
+  text-align: left;
+  width: 100%;
+}
+
+.cashback-det-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.cashback-det-description {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.cashback-det-price {
+  font-size: 1.5rem;
+  color: #000;
+  font-weight: bold;
+}
+
+
+
+.header-content {
+  display: flex;
+  justify-content: space-between; /* Распределяем элементы на две части */
+  align-items: center; /* Выравниваем по вертикали */
+  width: 100%;
+}
+
+.header-links {
+  display: flex;
+  justify-content: flex-end; /* Ссылки выравниваются вправо */
+  gap: 30px; /* Расстояние между ссылками */
+}
+
+.header-link {
+  color: black;
+  text-decoration: none;
+  font-size: 16px;
+  transition: none; /* Убираем эффект изменения цвета при наведении */
+}
+
+.header-link:hover {
+  text-decoration: none; /* Убираем подчеркивание при наведении */
+}
+
+
