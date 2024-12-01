@@ -31,7 +31,8 @@
         "src": "/frontend/screenshot2.png",
         "sizes": "1280x800",
         "type": "image/png",
-        "platform": "web"
+        "platform": "web",
+        "form_factor": "wide"
       }
     ]
   }
