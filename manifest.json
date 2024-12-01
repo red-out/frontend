@@ -22,10 +22,16 @@
     ],
     "screenshots": [
       {
-        "src": "/frontend/screen.png",
+        "src": "/frontend/screenshot1.png",
+        "sizes": "640x1136",
         "type": "image/png",
-        "sizes": "640x480",
-        "form_factor": "wide"
+        "platform": "web"
+      },
+      {
+        "src": "/frontend/screenshot2.png",
+        "sizes": "1280x800",
+        "type": "image/png",
+        "platform": "web"
       }
     ]
   }
