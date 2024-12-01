@@ -8,21 +8,21 @@
     "orientation": "portrait-primary",
     "icons": [
       {
-        "src": "/192.png",
+        "src": "/frontend/192.png",
         "type": "image/png", "sizes": "192x192"
       },
       {
-        "src": "/512.png",
+        "src": "/frontend/512.png",
         "type": "image/png", "sizes": "512x512"
       },
       {
-        "src": "/144.png",
+        "src": "/frontend/144.png",
         "type": "image/png", "sizes": "144x144"
       }
     ],
     "screenshots": [
       {
-        "src": "/screen.png",
+        "src": "/frontend/screen.png",
         "type": "image/png",
         "sizes": "640x480",
         "form_factor": "wide"
