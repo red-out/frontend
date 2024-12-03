@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import Navbar from '../components/Navbar'; // Импорт Navbar
 import mockData from '../mocks/cashbackData'; // Импорт моковых данных
 import Breadcrumb from '../components/BreadCrumbs';
 import '../assets/style.css';
@@ -60,15 +61,13 @@ const CashbackDetailsPage: React.FC = () => {
       {/* Шапка */}
       <header className="mb-4">
         <div className="header-content">
-          <div className="logo">
+          {/* Кликабельный MEGA BONUS */}
+          <Link to="/" className="logo">
             <div className="mega">MEGA</div>
             <div className="bonus">BONUS</div>
-          </div>
-          {/* Кликабельные слова вместо кнопок */}
-          <div className="header-links">
-            <Link to="/" className="header-link">Главная</Link>
-            <Link to="/cashbacks" className="header-link">Кешбэки</Link>
-          </div>
+          </Link>
+          {/* Вставляем Navbar */}
+          <Navbar />
         </div>
       </header>
 
@@ -94,6 +93,7 @@ const CashbackDetailsPage: React.FC = () => {
 };
 
 export default CashbackDetailsPage;
+
 
 
 

@@ -29,6 +29,7 @@ header {
 }
 
 .logo {
+  text-decoration: none; /* Убираем подчеркивание */
   display: flex;
   align-items: center;
   font-size: 1.25rem;
@@ -63,7 +64,7 @@ p {
 .custom-breadcrumb {
   position: relative; /* Устанавливаем относительное позиционирование */
   z-index: 15; /* Выше, чем поисковая строка (10) */
-  margin-top: 80px; /* Расстояние сверху */
+  margin-top: 70px; /* Расстояние сверху */
   margin-bottom: 16px; /* Отступ снизу */
 }
 
@@ -94,6 +95,7 @@ p {
 
 
 /* Строка поиска */
+/* Контейнер для поиска */
 .search-container {
   position: fixed; /* Закрепляем поле поиска */
   top: 80px; /* Расстояние от верхнего края */
@@ -109,12 +111,15 @@ p {
   border-radius: 8px;
 }
 
+/* Поле ввода */
 .search-container input {
   padding: 12px;
   border-radius: 4px 0 0 4px;
-  width: 700px; /* Ширина поля ввода */
+  width: 700px; /* Ширина поля ввода для больших экранов */
   border: 1px solid #ffeb3b;
   border-right: none; /* Убираем правую границу, чтобы не дублировать с кнопкой */
+  box-sizing: border-box;
+  height: 50px; /* Устанавливаем одинаковую высоту для поля ввода */
 }
 
 .search-container button {
@@ -138,22 +143,7 @@ p {
 }
 
 /* Стили для контейнера карточек */
-.cards-container {
-  margin-top: 45px;
-  display: flex;
-  flex-wrap: wrap; /* Карточки переносятся на следующую строку */
-  gap: 20px;
-  justify-content: flex-start;
-  padding-left: 20px;
-  box-sizing: border-box;
-  
-  /* Устанавливаем фиксированную высоту */
-  height: 600px; /* Подберите высоту под ваш макет */
-  overflow-y: auto; /* Добавляем вертикальную прокрутку, если карточек больше */
-  
-  /* Для видимости скроллбара */
-  scroll-behavior: smooth; 
-}
+
 
 /* Для стилизации полосы прокрутки (необязательно) */
 .cards-container::-webkit-scrollbar {
@@ -170,10 +160,25 @@ p {
 }
 
 /* Карточки */
+/* Контейнер для карточек */
+/* Контейнер для карточек */
+.cards-container {
+  margin-top: 45px;
+  display: flex;
+  flex-wrap: wrap; /* Карточки переносятся на следующую строку */
+  gap: 20px; /* Расстояние между карточками */
+  justify-content: flex-start;
+  padding-left: 20px;
+  box-sizing: border-box;
+  width: 100%; /* Устанавливаем 100% ширины */
+  height: auto; /* Автоматическая высота */
+}
+
+/* Карточки */
 .card {
-  width: 330px; /* Фиксированная ширина карточки */
-  height: 270px; /* Устанавливаем фиксированную высоту карточки */
-  max-width: 100%; /* Ограничиваем максимальную ширину карточки */
+  width: calc(25% - 15px); /* Каждая карточка будет занимать 25% ширины контейнера с учетом отступа */
+  max-width: 100%; /* Устанавливаем максимальную ширину 100% */
+  height: auto; /* Автоматическая высота */
   padding: 20px;
   background-color: #fff;
   border: 1px solid #ffeb3b;
@@ -185,7 +190,8 @@ p {
   flex-direction: column;
   justify-content: flex-start;
   position: relative;
-  margin-bottom: 20px; /* Отступ снизу для карточек */
+  margin-bottom: 20px;
+  flex-grow: 1; /* Карточки растягиваются на доступную ширину */
 }
 
 /* Контейнер для изображения карточки */
@@ -261,18 +267,6 @@ form input {
   text-align: center;
 }
 
-/* Кнопка поиска */
-form button {
-  padding: 12px 20px;
-  background-color: #ffeb3b;
-  color: #000;
-  border: 1px solid #ffeb3b;
-  border-radius: 0 4px 4px 0;
-  cursor: pointer;
-  margin-left: -1px;
-  font-size: 16px;
-  height: 50px;
-}
 
 /* Изменение цвета кнопки при наведении */
 form button:hover {
@@ -387,4 +381,172 @@ form button:hover {
   text-decoration: none; /* Убираем подчеркивание при наведении */
 }
 
+
+
+
+
+@media (max-width: 1200px) {
+  .card {
+    width: calc(33.33% - 15px); /* При экранах меньше 1200px, каждая карточка будет занимать 33.33% ширины */
+  }
+}
+
+@media (max-width: 992px) {
+  .card {
+    width: calc(50% - 15px); /* При экранах меньше 992px, каждая карточка будет занимать 50% ширины */
+  }
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: calc(100% - 20px); /* Уменьшаем ширину карточки, чтобы учесть отступ */
+    margin-right: 19px; /* Добавляем отступ справа */
+
+  }
+}
+
+/* Адаптивность: при меньших экранах уменьшаем ширину поля поиска */
+@media (max-width: 1200px) {
+  .search-container input {
+    width: 600px; /* Ширина для экранов меньше 1200px */
+  }
+}
+
+@media (max-width: 992px) {
+  .search-container input {
+    width: 500px; /* Ширина для экранов меньше 992px */
+  }
+}
+
+@media (max-width: 768px) {
+  .search-container input {
+    width: 350px; /* Ширина для экранов меньше 768px */
+  }
+}
+
+@media (max-width: 480px) {
+  .search-container {
+    width: 85%; /* Это позволит контейнеру использовать всю ширину экрана */
+    padding: 0 10px;
+  }
+  
+  .search-container input {
+    width: 100%; /* Попробуйте использовать 100% вместо фиксированного процента */
+    max-width: 400px; /* Ограничиваем максимальную ширину */
+    font-size: 16px;
+    padding: 10px;
+  }
+  .search-container button {
+    color: #000 !important; /* Устанавливаем черный цвет текста на мобильных устройствах */
+  }
+}
+
+.btn-secondary {
+  padding: 12px 20px;
+  background-color: #ffeb3b;
+  color: #000;
+  border: 1px solid #ffeb3b;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  margin-left: -1px;
+  font-size: 16px;
+  height: 50px;
+  transition: background-color 0.3s ease; /* Плавный переход */
+}
+
+.btn-secondary:hover {
+  background-color: #f7e240; /* Темный желтый оттенок */
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+  .cashback-details {
+    margin: 20px auto;
+    width: 90%; /* Занимает всю ширину экрана */
+    padding: 15px;
+    box-shadow: none; /* Убираем тени на маленьких экранах */
+  }
+
+  .cashback-det-image {
+    max-width: 250px; /* Уменьшаем размер изображения */
+  }
+
+  .cashback-det-title {
+    font-size: 1.25rem; /* Уменьшаем размер текста */
+  }
+
+  .cashback-det-description,
+  .cashback-det-price {
+    font-size: 1rem; /* Уменьшаем размер текста */
+  }
+}
+
+@media (max-width: 480px) {
+  .cashback-details {
+    margin: 10px auto;
+    padding: 10px;
+  }
+
+  .cashback-det-image {
+    max-width: 200px; /* Еще меньше для очень маленьких экранов */
+  }
+
+  .cashback-det-title {
+    font-size: 1rem;
+  }
+
+  .cashback-det-description,
+  .cashback-det-price {
+    font-size: 0.9rem;
+  }
+}
+
+.hamburger-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #333; /* Цвет иконки */
+  transition: color 0.3s ease; /* Плавный переход цвета при наведении */
+}
+
+.hamburger-button:hover {
+  color: #ffae00; /* Цвет при наведении */
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 3rem;
+  right: 1rem;
+  background: #fff;
+  border: none;
+  border-radius: 8px; /* Более мягкие углы */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Легкая тень для выделения */
+  padding: 0.5rem 0;
+  list-style: none;
+  z-index: 10;
+  width: 200px; /* Ширина меню */
+}
+
+.dropdown-menu li {
+  padding: 0.75rem 1rem;
+  font-size: 1rem; /* Увеличиваем шрифт для лучшей читаемости */
+  color: #333;
+  transition: background-color 0.3s ease; /* Плавный переход фона при наведении */
+}
+
+.dropdown-menu li:hover {
+  background-color: #f1f1f1; /* Легкий фон при наведении */
+}
+
+.dropdown-menu a {
+  text-decoration: none;
+  color: inherit; /* Наследуем цвет родителя */
+  display: block;
+  font-weight: 500;
+}
+
+.dropdown-menu a:hover {
+  color: #ffae00; /* Цвет ссылки при наведении */
+}
 

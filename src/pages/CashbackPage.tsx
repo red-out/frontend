@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import Breadcrumb from "../components/BreadCrumbs";
-import mockData from '../mocks/cashbackData'; 
+import Navbar from "../components/Navbar"; // Импорт нового компонента
+import { setSearchTerm } from '../slices/cashbackSlice'; // Redux action для обновления searchTerm
+import mockData from '../mocks/cashbackData';
 import '../assets/style.css';
 
 interface CashbackService {
@@ -14,33 +17,35 @@ interface CashbackService {
 }
 
 const CashbackPage: React.FC = () => {
-  const [services, setServices] = useState<CashbackService[]>([]); // Данные кешбэков
-  const [filteredServices, setFilteredServices] = useState<CashbackService[]>([]); // Отфильтрованные сервисы
-  const [searchTerm, setSearchTerm] = useState(''); // Строка поиска
-  const [loading, setLoading] = useState(false); // Статус загрузки
-  const [error, setError] = useState<string | null>(null); // Ошибка загрузки
+  const dispatch = useDispatch();
+  const searchTerm = useSelector((state: any) => state.search.searchTerm); // Получаем searchTerm из хранилища Redux
+  const [inputValue, setInputValue] = useState(searchTerm); // Локальное состояние для поля ввода
+  const [filteredServices, setFilteredServices] = useState<CashbackService[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchServices(); // Загружаем все сервисы при монтировании компонента
-  }, []); // Загружаем данные один раз при монтировании
+    fetchServices(searchTerm); // Вызов функции при инициализации компонента
+  }, []); // Эффект без зависимости от searchTerm, чтобы выполнить запрос один раз при монтировании
+
+  useEffect(() => {
+    fetchServices(searchTerm); // Перезапрашиваем данные при изменении searchTerm
+  }, [searchTerm]);
 
   const fetchServices = async (search: string = '') => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(`/cashback_services?search=${encodeURIComponent(search)}`); // Передаем параметр поиска
+      const response = await fetch(`/cashback_services?search=${encodeURIComponent(search)}`);
       if (!response.ok) throw new Error('Ошибка загрузки данных с бэкенда');
       const data = await response.json();
       if (Array.isArray(data) && data.length > 0) {
-        setServices(data); // Устанавливаем полученные данные
-        setFilteredServices(data); // При первой загрузке все сервисы отображаются
+        setFilteredServices(data);
       } else {
-        setServices([]); // Если данные пустые, ставим пустой массив
-        setFilteredServices([]); // И отфильтрованный массив пуст
+        setFilteredServices([]);
       }
     } catch (err) {
-      setServices(mockData); // Используем моковые данные при ошибке
-      setFilteredServices(mockData); // И для моковых данных тоже
+      setFilteredServices(mockData); // В случае ошибки, используем mockData
     } finally {
       setLoading(false);
     }
@@ -48,50 +53,43 @@ const CashbackPage: React.FC = () => {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    fetchServices(searchTerm); // Передаем строку поиска на сервер для фильтрации
+    dispatch(setSearchTerm(inputValue)); // Обновляем searchTerm в Redux
+    fetchServices(inputValue); // Выполняем поиск с текущим значением поля ввода
   };
 
   return (
     <div className="cashback-page">
-      {/* Шапка */}
       <header className="mb-4">
         <div className="header-content">
-          <div className="logo">
+          {/* Кликабельный MEGA BONUS */}
+          <Link to="/" className="logo">
             <div className="mega">MEGA</div>
-            <div className="bonus">BONUS </div>
-          </div>
-          {/* <p>Кешбэк сервис</p> */}
-          {/* Кликабельные слова вместо кнопок */}
-          <div className="header-links">
-            <Link to="/" className="header-link">Главная</Link>
-            <Link to="/cashbacks" className="header-link">Кешбэки</Link>
-          </div>
+            <div className="bonus">BONUS</div>
+          </Link>
+          {/* Встраиваем Navbar */}
+          <Navbar />
         </div>
       </header>
 
-      {/* Breadcrumb для навигации */}
       <Breadcrumb items={[{ label: 'Главная', path: '/' }, { label: 'Список кешбэков', path: '/cashbacks' }]} />
 
-      {/* Форма поиска */}
       <div className="search-container">
         <form onSubmit={handleSearch} className="search-form">
           <input
             type="text"
             placeholder="Поиск по названию"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            value={inputValue} // Используем локальное состояние для ввода
+            onChange={(e) => setInputValue(e.target.value)} // Обновляем локальное состояние
             className="search-input"
-            maxLength={50} // Ограничение длины текста
+            maxLength={50}
           />
           <button type="submit" className="search-button">Найти</button>
         </form>
       </div>
 
-      {/* Загрузка и ошибки */}
       {loading && <div className="spinner">Загрузка...</div>}
       {error && <div className="error">{error}</div>}
 
-      {/* Карточки кешбэков */}
       <div className="cards-container">
         {filteredServices.length > 0 ? (
           filteredServices.map(service => (
@@ -119,6 +117,5 @@ const CashbackPage: React.FC = () => {
 };
 
 export default CashbackPage;
-
 
 
