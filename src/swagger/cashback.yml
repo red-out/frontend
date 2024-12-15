@@ -1,0 +1,1064 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Snippets API",
+    "description": "Test description",
+    "termsOfService": "https://www.google.com/policies/terms/",
+    "contact": {
+      "email": "contact@snippets.local"
+    },
+    "license": {
+      "name": "BSD License"
+    },
+    "version": "v1"
+  },
+  "host": "127.0.0.1:8000",
+  "schemes": [
+    "http"
+  ],
+  "basePath": "/",
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "securityDefinitions": {
+    "Basic": {
+      "type": "basic"
+    }
+  },
+  "security": [
+    {
+      "Basic": []
+    }
+  ],
+  "paths": {
+    "/api/user/": {
+      "get": {
+        "operationId": "api_user_list",
+        "description": "Класс, описывающий методы работы с пользователями\nОсуществляет связь с таблицей пользователей в базе данных",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          }
+        },
+        "tags": [
+          "api"
+        ]
+      },
+      "post": {
+        "operationId": "api_user_create",
+        "description": "Функция регистрации новых пользователей\nЕсли пользователя c указанным в request email ещё нет, в БД будет добавлен новый пользователь.",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        },
+        "tags": [
+          "api"
+        ]
+      },
+      "parameters": []
+    },
+    "/api/user/{id}/": {
+      "get": {
+        "operationId": "api_user_read",
+        "description": "Класс, описывающий методы работы с пользователями\nОсуществляет связь с таблицей пользователей в базе данных",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        },
+        "tags": [
+          "api"
+        ]
+      },
+      "put": {
+        "operationId": "api_user_update",
+        "description": "Класс, описывающий методы работы с пользователями\nОсуществляет связь с таблицей пользователей в базе данных",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        },
+        "tags": [
+          "api"
+        ]
+      },
+      "patch": {
+        "operationId": "api_user_partial_update",
+        "description": "Класс, описывающий методы работы с пользователями\nОсуществляет связь с таблицей пользователей в базе данных",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        },
+        "tags": [
+          "api"
+        ]
+      },
+      "delete": {
+        "operationId": "api_user_delete",
+        "description": "Класс, описывающий методы работы с пользователями\nОсуществляет связь с таблицей пользователей в базе данных",
+        "parameters": [],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "api"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "A unique integer value identifying this custom user.",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    "/cashback_orders/": {
+      "get": {
+        "operationId": "cashback_orders_list",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cashback_orders"
+        ]
+      },
+      "parameters": []
+    },
+    "/cashback_orders/{id}/": {
+      "get": {
+        "operationId": "cashback_orders_read",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cashback_orders"
+        ]
+      },
+      "put": {
+        "operationId": "cashback_orders_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CashbackOrder"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CashbackOrder"
+            }
+          }
+        },
+        "tags": [
+          "cashback_orders"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    "/cashback_orders/{id}/complete_or_reject/": {
+      "put": {
+        "operationId": "cashback_orders_complete_or_reject_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CompleteOrRejectOrder"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CompleteOrRejectOrder"
+            }
+          }
+        },
+        "tags": [
+          "cashback_orders"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    "/cashback_orders/{id}/create/": {
+      "put": {
+        "operationId": "cashback_orders_create_update",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cashback_orders"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    "/cashback_orders/{id}/delete/": {
+      "get": {
+        "operationId": "cashback_orders_delete_list",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cashback_orders"
+        ]
+      },
+      "put": {
+        "operationId": "cashback_orders_delete_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CashbackOrder"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CashbackOrder"
+            }
+          }
+        },
+        "tags": [
+          "cashback_orders"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    "/cashback_orders/{id}/update/": {
+      "get": {
+        "operationId": "cashback_orders_update_list",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cashback_orders"
+        ]
+      },
+      "put": {
+        "operationId": "cashback_orders_update_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CashbackOrder"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CashbackOrder"
+            }
+          }
+        },
+        "tags": [
+          "cashback_orders"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    "/cashback_services/": {
+      "get": {
+        "operationId": "cashback_services_list",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cashback_services"
+        ]
+      },
+      "post": {
+        "operationId": "cashback_services_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CashbackService"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CashbackService"
+            }
+          }
+        },
+        "tags": [
+          "cashback_services"
+        ]
+      },
+      "parameters": []
+    },
+    "/cashback_services/add/": {
+      "get": {
+        "operationId": "cashback_services_add_list",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cashback_services"
+        ]
+      },
+      "post": {
+        "operationId": "cashback_services_add_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CashbackService"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CashbackService"
+            }
+          }
+        },
+        "tags": [
+          "cashback_services"
+        ]
+      },
+      "parameters": []
+    },
+    "/cashback_services/{id}/": {
+      "get": {
+        "operationId": "cashback_services_read",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cashback_services"
+        ]
+      },
+      "put": {
+        "operationId": "cashback_services_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CashbackService"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CashbackService"
+            }
+          }
+        },
+        "tags": [
+          "cashback_services"
+        ]
+      },
+      "delete": {
+        "operationId": "cashback_services_delete",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cashback_services"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    "/cashback_services/{id}/add_image/": {
+      "post": {
+        "operationId": "cashback_services_add_image_create",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cashback_services"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    "/cashback_services/{id}/add_to_draft/": {
+      "post": {
+        "operationId": "cashback_services_add_to_draft_create",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cashback_services"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    "/cashback_services/{id}/delete/": {
+      "get": {
+        "operationId": "cashback_services_delete_list",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cashback_services"
+        ]
+      },
+      "put": {
+        "operationId": "cashback_services_delete_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CashbackService"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CashbackService"
+            }
+          }
+        },
+        "tags": [
+          "cashback_services"
+        ]
+      },
+      "delete": {
+        "operationId": "cashback_services_delete_delete",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cashback_services"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    "/cashback_services/{id}/update/": {
+      "get": {
+        "operationId": "cashback_services_update_list",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cashback_services"
+        ]
+      },
+      "put": {
+        "operationId": "cashback_services_update_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CashbackService"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CashbackService"
+            }
+          }
+        },
+        "tags": [
+          "cashback_services"
+        ]
+      },
+      "delete": {
+        "operationId": "cashback_services_update_delete",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cashback_services"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    "/cashbacks_orders/{order_id}/services/{service_id}/delete/": {
+      "put": {
+        "operationId": "cashbacks_orders_services_delete_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CashbackOrderService"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CashbackOrderService"
+            }
+          }
+        },
+        "tags": [
+          "cashbacks_orders"
+        ]
+      },
+      "delete": {
+        "operationId": "cashbacks_orders_services_delete_delete",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cashbacks_orders"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "order_id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "service_id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    "/cashbacks_orders/{order_id}/services/{service_id}/update/": {
+      "put": {
+        "operationId": "cashbacks_orders_services_update_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CashbackOrderService"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CashbackOrderService"
+            }
+          }
+        },
+        "tags": [
+          "cashbacks_orders"
+        ]
+      },
+      "delete": {
+        "operationId": "cashbacks_orders_services_update_delete",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cashbacks_orders"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "order_id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "service_id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    "/login/": {
+      "post": {
+        "operationId": "login_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        },
+        "tags": [
+          "login"
+        ]
+      },
+      "parameters": []
+    },
+    "/logout/": {
+      "post": {
+        "operationId": "logout_create",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "logout"
+        ]
+      },
+      "parameters": []
+    },
+    "/user/{id}/update/": {
+      "patch": {
+        "operationId": "user_update_partial_update",
+        "description": "Метод для частичного обновления данных пользователя.",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        },
+        "tags": [
+          "user"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "User": {
+      "required": [
+        "email",
+        "password"
+      ],
+      "type": "object",
+      "properties": {
+        "email": {
+          "title": "Email адрес",
+          "type": "string",
+          "format": "email",
+          "maxLength": 254,
+          "minLength": 1
+        },
+        "password": {
+          "title": "Пароль",
+          "type": "string",
+          "maxLength": 120,
+          "minLength": 1
+        },
+        "is_staff": {
+          "title": "Is staff",
+          "type": "boolean",
+          "default": false
+        },
+        "is_superuser": {
+          "title": "Is superuser",
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "CashbackService": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "ID",
+          "type": "integer",
+          "readOnly": true
+        },
+        "image_url": {
+          "title": "Image url",
+          "type": "string",
+          "minLength": 1
+        },
+        "category": {
+          "title": "Category",
+          "type": "string",
+          "maxLength": 255,
+          "minLength": 1
+        },
+        "cashback_percentage_text": {
+          "title": "Cashback percentage text",
+          "type": "string",
+          "maxLength": 255,
+          "minLength": 1
+        },
+        "full_description": {
+          "title": "Full description",
+          "type": "string",
+          "minLength": 1
+        },
+        "details": {
+          "title": "Details",
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "title": "Status",
+          "type": "string",
+          "enum": [
+            "active",
+            "deleted"
+          ]
+        }
+      }
+    },
+    "CashbackOrder": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "ID",
+          "type": "integer",
+          "readOnly": true
+        },
+        "services": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CashbackService"
+          },
+          "readOnly": true
+        },
+        "status": {
+          "title": "Status",
+          "type": "string",
+          "enum": [
+            "draft",
+            "deleted",
+            "formed",
+            "completed",
+            "rejected"
+          ]
+        },
+        "creation_date": {
+          "title": "Creation date",
+          "type": "string",
+          "format": "date-time"
+        },
+        "formation_date": {
+          "title": "Formation date",
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "completion_date": {
+          "title": "Completion date",
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "month": {
+          "title": "Month",
+          "type": "string",
+          "maxLength": 20,
+          "minLength": 1
+        },
+        "total_spent_month": {
+          "title": "Total spent month",
+          "type": "integer",
+          "maximum": 2147483647,
+          "minimum": 0,
+          "x-nullable": true
+        },
+        "creator": {
+          "title": "Creator",
+          "type": "integer"
+        },
+        "moderator": {
+          "title": "Moderator",
+          "type": "integer",
+          "x-nullable": true
+        }
+      }
+    },
+    "CompleteOrRejectOrder": {
+      "required": [
+        "action"
+      ],
+      "type": "object",
+      "properties": {
+        "action": {
+          "title": "Action",
+          "type": "string",
+          "enum": [
+            "complete",
+            "reject"
+          ]
+        }
+      }
+    },
+    "CashbackOrderService": {
+      "type": "object",
+      "properties": {
+        "total_spent": {
+          "title": "Total spent",
+          "type": "integer",
+          "maximum": 2147483647,
+          "minimum": 0
+        }
+      }
+    }
+  }
+}

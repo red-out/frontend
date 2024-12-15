@@ -550,3 +550,65 @@ form button:hover {
   color: #ffae00; /* Цвет ссылки при наведении */
 }
 
+
+
+
+.auth-container {
+  max-width: 380px; /* Чуть меньше ширины для аккуратности */
+  margin: 40px auto; /* Отступ сверху */
+  padding: 25px; /* Увеличен отступ внутри */
+  border: 1px solid #ffeb3b; /* Тонкая рамка */
+  border-radius: 12px; /* Более мягкие углы */
+  background-color: white; /* Фон рамки */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Легкая тень для объема */
+}
+
+.auth-container h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 1.5rem; /* Чуть больше текста */
+  font-weight: 600; /* Сделаем текст заголовка жирнее */
+  color: #333; /* Нейтральный темный цвет */
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-input {
+  margin-bottom: 20px; /* Увеличен отступ между полями */
+  padding: 12px; /* Увеличен внутренний отступ */
+  font-size: 16px;
+  border: 1px solid #ddd; /* Светлая рамка */
+  border-radius: 6px; /* Мягкие углы */
+  width: 100%;
+  box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.05); /* Легкая внутренняя тень */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Плавная анимация */
+}
+
+.auth-input:focus {
+  border-color: #ffeb3b; /* Подсветка рамки при фокусе */
+  box-shadow: 0 0 6px rgba(255, 235, 59, 0.6); /* Легкая желтая подсветка */
+  outline: none; /* Убираем стандартную подсветку */
+}
+
+.auth-button {
+  padding: 12px; /* Размер кнопки */
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #ffeb3b; /* Ярко-желтый фон */
+  color: black; /* Черный текст */
+  border: none;
+  border-radius: 6px; /* Мягкие углы */
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s ease; /* Плавная смена цвета */
+}
+
+.auth-button:hover {
+  background-color: #fdd835; /* Чуть темнее при наведении */
+}
+.auth-button:active {
+  background-color: #fbc02d; /* Еще чуть темнее при клике */
+}
