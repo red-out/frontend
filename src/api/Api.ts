@@ -33,10 +33,6 @@ export interface User {
    * @default false
    */
   is_superuser?: boolean;
-  /**
-   * Session ID for the user
-   */
-  session_id?: string; // Optional field
 }
 
 export interface CashbackService {
@@ -870,7 +866,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     loginCreate: (data: User, params: RequestParams = {}) =>
-      this.request<User, any>({
+      this.request<{ status: string; session_id?: string }, void>({
         path: `/login/`,
         method: "POST",
         body: data,

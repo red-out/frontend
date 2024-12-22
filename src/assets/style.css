@@ -612,3 +612,33 @@ form button:hover {
 .auth-button:active {
   background-color: #fbc02d; /* Еще чуть темнее при клике */
 }
+
+
+
+
+.link-button {
+  padding: 0px 12px; /* Еще уменьшены отступы по вертикали */
+  background-color: #ffeb3b; /* Цвет фона - желтый */
+  border-radius: 4px; /* Округленные углы */
+  border: 1px solid #ffeb3b; /* Граница того же цвета */
+  cursor: pointer; /* Указатель курсора при наведении */
+  text-decoration: none; /* Убираем подчеркивание */
+  font-size: 14px; /* Размер шрифта */
+  color: black; /* Черный цвет текста */
+  display: inline-flex; /* Используем flexbox для центрирования */
+  align-items: center; /* Вертикальное выравнивание по центру */
+  justify-content: center; /* Горизонтальное выравнивание по центру */
+  white-space: nowrap; /* Запрещаем перенос текста на новую строку */
+  transition: background-color 0.3s; /* Плавное изменение фона */
+  margin-left: 16px; /* Отступ от кнопки Найти */
+}
+
+.link-button:hover {
+  background-color: #fdd835; /* Цвет фона при наведении */
+}
+
+.link-button:focus {
+  outline: none; /* Убираем обводку при фокусировке */
+}
+
+
