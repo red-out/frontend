@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import Breadcrumb from "../components/BreadCrumbs";
 import Navbar from "../components/Navbar";
 import { setSearchTerm } from '../slices/cashbackSlice';
-import { Api } from "../api/Api"; // Импортируем сгенерированный API
-import axios from 'axios'; // Импортируем axios
+import { Api } from "../api/Api";
+import axios from 'axios';
 import '../assets/style.css';
 
 interface CashbackService {
@@ -24,6 +24,7 @@ const CashbackPage: React.FC = () => {
   const sessionId = useSelector((state: any) => state.auth.sessionId);
   const [inputValue, setInputValue] = useState(searchTerm);
   const [filteredServices, setFilteredServices] = useState<CashbackService[]>([]);
+  const [cashbacksCount, setCashbacksCount] = useState<number>(0);
   const [draftOrderId, setDraftOrderId] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -37,6 +38,13 @@ const CashbackPage: React.FC = () => {
     }
   }, [sessionId]);
 
+  useEffect(() => {
+    if (!isAuthenticated) {
+      document.cookie = `session_id=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
+      console.log('Кука session_id удалена');
+    }
+  }, [isAuthenticated]);
+
   const fetchData = async (search: string = '') => {
     setLoading(true);
     setError(null);
@@ -48,11 +56,11 @@ const CashbackPage: React.FC = () => {
       });
 
       const data = response.data;
-      const services = data.filter((item: any) => item.id);
-      const draftOrder = data.find((item: any) => item.draft_order_id);
 
-      setFilteredServices(services || []);
+      setFilteredServices(data.filter((item: any) => item.id) || []);
+      const draftOrder = data.find((item: any) => item.draft_order_id);
       setDraftOrderId(draftOrder ? draftOrder.draft_order_id : null);
+      setCashbacksCount(draftOrder ? draftOrder.cashbacks_count : 0);
     } catch (err) {
       console.error(err);
       setError('Не удалось загрузить данные.');
@@ -62,15 +70,17 @@ const CashbackPage: React.FC = () => {
   };
 
   useEffect(() => {
-    if (firstRender.current) {
-      firstRender.current = false;
+    if (!firstRender.current) {
       fetchData(searchTerm);
+    } else {
+      firstRender.current = false;
     }
   }, [searchTerm]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     dispatch(setSearchTerm(inputValue));
+    fetchData(inputValue);
   };
 
   const handleAddToDraft = async (serviceId: number) => {
@@ -78,13 +88,17 @@ const CashbackPage: React.FC = () => {
       await api.cashbackServices.cashbackServicesAddToDraftCreate(String(serviceId), {
         headers: {
           'Content-Type': 'application/json',
-          'Session-ID': sessionId, // Передаем sessionId в заголовках
+          'Session-ID': sessionId,
         },
       });
       alert(`Услуга с ID ${serviceId} успешно добавлена в кешбэк.`);
-    } catch (error) {
-      console.error(error);
-      alert('Ошибка при добавлении услуги в кешбэк.');
+    } catch (error: any) {
+      if (error.response && error.response.status === 409) {
+        alert('Категория уже добавлена!');
+      } else {
+        console.error(error);
+        alert('Категория уже добавлена!');
+      }
     }
   };
 
@@ -118,7 +132,7 @@ const CashbackPage: React.FC = () => {
             className="search-button link-button"
             style={{ pointerEvents: isAuthenticated && draftOrderId ? 'auto' : 'none' }}
           >
-            Ваши кешбэки
+            Ваши кешбэки{cashbacksCount ? `: ${cashbacksCount}` : ''}
           </Link>
         </form>
       </div>
@@ -163,17 +177,14 @@ export default CashbackPage;
 
 
 
-
-
-
-
-
 // import React, { useEffect, useState, useRef } from 'react';
 // import { Link } from 'react-router-dom';
 // import { useDispatch, useSelector } from 'react-redux';
 // import Breadcrumb from "../components/BreadCrumbs";
 // import Navbar from "../components/Navbar";
 // import { setSearchTerm } from '../slices/cashbackSlice';
+// import { Api } from "../api/Api";
+// import axios from 'axios';
 // import '../assets/style.css';
 
 // interface CashbackService {
@@ -192,10 +203,12 @@ export default CashbackPage;
 //   const sessionId = useSelector((state: any) => state.auth.sessionId);
 //   const [inputValue, setInputValue] = useState(searchTerm);
 //   const [filteredServices, setFilteredServices] = useState<CashbackService[]>([]);
+//   const [cashbacksCount, setCashbacksCount] = useState<number>(0);
 //   const [draftOrderId, setDraftOrderId] = useState<number | null>(null);
 //   const [loading, setLoading] = useState(false);
 //   const [error, setError] = useState<string | null>(null);
-//   const firstRender = useRef(true); // Флаг для контроля первого рендера
+//   const firstRender = useRef(true);
+//   const api = new Api();
 
 //   useEffect(() => {
 //     if (sessionId) {
@@ -208,20 +221,18 @@ export default CashbackPage;
 //     setLoading(true);
 //     setError(null);
 //     try {
-//       const response = await fetch(`/cashback_services?search=${encodeURIComponent(search)}`, {
-//         method: 'GET',
+//       const response = await axios.get(`/cashback_services`, {
+//         params: { search },
 //         headers: { 'Content-Type': 'application/json' },
-//         credentials: 'include',
+//         withCredentials: true,
 //       });
 
-//       if (!response.ok) throw new Error('Ошибка загрузки данных');
-//       const data = await response.json();
+//       const data = response.data;
 
-//       const services = data.filter((item: any) => item.id);
+//       setFilteredServices(data.filter((item: any) => item.id) || []);
 //       const draftOrder = data.find((item: any) => item.draft_order_id);
-
-//       setFilteredServices(services || []);
 //       setDraftOrderId(draftOrder ? draftOrder.draft_order_id : null);
+//       setCashbacksCount(draftOrder ? draftOrder.cashbacks_count : 0);
 //     } catch (err) {
 //       console.error(err);
 //       setError('Не удалось загрузить данные.');
@@ -231,15 +242,32 @@ export default CashbackPage;
 //   };
 
 //   useEffect(() => {
-//     if (firstRender.current) {
-//       firstRender.current = false;
+//     if (!firstRender.current) {
 //       fetchData(searchTerm);
+//     } else {
+//       firstRender.current = false;
 //     }
 //   }, [searchTerm]);
 
 //   const handleSearch = (e: React.FormEvent) => {
 //     e.preventDefault();
-//     dispatch(setSearchTerm(inputValue));
+//     dispatch(setSearchTerm(inputValue)); // Обновляем состояние в Redux
+//     fetchData(inputValue); // Загружаем данные с новым запросом
+//   };
+
+//   const handleAddToDraft = async (serviceId: number) => {
+//     try {
+//       await api.cashbackServices.cashbackServicesAddToDraftCreate(String(serviceId), {
+//         headers: {
+//           'Content-Type': 'application/json',
+//           'Session-ID': sessionId,
+//         },
+//       });
+//       alert(`Услуга с ID ${serviceId} успешно добавлена в кешбэк.`);
+//     } catch (error) {
+//       console.error(error);
+//       alert('Ошибка при добавлении услуги в кешбэк.');
+//     }
 //   };
 
 //   return (
@@ -272,7 +300,7 @@ export default CashbackPage;
 //             className="search-button link-button"
 //             style={{ pointerEvents: isAuthenticated && draftOrderId ? 'auto' : 'none' }}
 //           >
-//             Ваши кешбэки
+//             Ваши кешбэки{cashbacksCount ? `: ${cashbacksCount}` : ''}
 //           </Link>
 //         </form>
 //       </div>
@@ -297,6 +325,7 @@ export default CashbackPage;
 //               </Link>
 //               <button
 //                 className="btn btn-secondary"
+//                 onClick={() => handleAddToDraft(service.id)}
 //                 disabled={!isAuthenticated}
 //                 style={{ pointerEvents: isAuthenticated ? 'auto' : 'none' }}
 //               >
@@ -313,9 +342,3 @@ export default CashbackPage;
 // };
 
 // export default CashbackPage;
-
-
-
-
-
-

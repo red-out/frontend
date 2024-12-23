@@ -642,3 +642,126 @@ form button:hover {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.cards-container-monthly-cashbacks {
+  margin-top: 45px;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0 20px 100px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.card-monthly-cashbacks {
+  width: 85%; /* Уменьшена ширина карточки */
+  max-width: 600px; /* Уменьшена максимальная ширина карточки */
+  height: auto;
+  padding: 15px;
+  background-color: #fff;
+  border: 1px solid #ffeb3b; /* Жёлтая рамка */
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Мягкая тень */
+  text-align: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  position: relative;
+}
+
+.card-image-container-monthly-cashbacks {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.card-image-monthly-cashbacks {
+  width: 100%;
+  max-width: 200px; /* Уменьшена максимальная ширина изображения */
+  height: 100px; /* Уменьшена высота изображения */
+  object-fit: contain;
+  margin-top: 20px;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: space-between; /* Размещаем элементы по краям */
+  align-items: center;
+  gap: 10px;
+  margin-top: auto; /* Располагаем элементы внизу карточки */
+  width: 100%; /* Растягиваем на всю ширину карточки */
+}
+
+.total-spent-input {
+  width: 120px; /* Размер совпадает с кнопкой */
+  padding: 10px;
+  border: 1px solid #ffeb3b; /* Жёлтая рамка */
+  border-radius: 4px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.total-spent-input:focus {
+  border-color: #ffeb3b;
+  outline: none;
+  box-shadow: 0 0 4px rgba(255, 235, 59, 0.5);
+}
+
+.delete-button {
+  background-color: #ff4d4d; /* Красный цвет */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 14px;
+  flex-shrink: 0; /* Кнопка не уменьшается */
+}
+
+.delete-button:hover {
+  background-color: #d93636; /* Темнее при наведении */
+}
+
+
+
+
+

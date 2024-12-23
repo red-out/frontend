@@ -49,6 +49,7 @@ const Register: React.FC = () => {
 
   const breadcrumbItems = [
     { label: 'Главная', path: '/' },
+    { label: 'Список кешбэков', path: '/cashbacks' },
     { label: 'Регистрация', path: '/register' },
   ];
 
