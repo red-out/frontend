@@ -6,6 +6,10 @@ import store from './store';
 import CashbackPage from './pages/CashbackPage';
 import CashbackDetailsPage from './pages/CashbackDetailsPage';
 import HomeCashback from './pages/HomeCashback';
+import Login from './pages/login';
+import Register from './pages/register';
+import Profile from './pages/profile';
+import MonthlyCashbacksPage from './pages/MonthlyCashbacks'
 
 const router = createBrowserRouter(
   [
@@ -20,6 +24,22 @@ const router = createBrowserRouter(
     {
       path: '/cashback-details/:id', 
       element: <CashbackDetailsPage />,
+    },
+    {
+      path: '/login',
+      element: <Login />,
+    },
+    {
+      path: '/register',
+      element: <Register />,
+    },
+    {
+      path: '/profile',
+      element: <Profile />,
+    },
+    {
+      path: '/monthly_cashbacks',
+      element: <MonthlyCashbacksPage />,
     },
   ],
   {

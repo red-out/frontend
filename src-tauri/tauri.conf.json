@@ -5,7 +5,7 @@
   "identifier": "com.tauri.dev",
   "build": {
     "frontendDist": "../build",
-    "devUrl": "https://192.168.1.73:3000",
+    "devUrl": "https://172.20.10.10:3000",
     "beforeDevCommand": "npm run dev",
     "beforeBuildCommand": "npm run build"
   },

@@ -550,3 +550,218 @@ form button:hover {
   color: #ffae00; /* Цвет ссылки при наведении */
 }
 
+
+
+
+.auth-container {
+  max-width: 380px; /* Чуть меньше ширины для аккуратности */
+  margin: 40px auto; /* Отступ сверху */
+  padding: 25px; /* Увеличен отступ внутри */
+  border: 1px solid #ffeb3b; /* Тонкая рамка */
+  border-radius: 12px; /* Более мягкие углы */
+  background-color: white; /* Фон рамки */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Легкая тень для объема */
+}
+
+.auth-container h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 1.5rem; /* Чуть больше текста */
+  font-weight: 600; /* Сделаем текст заголовка жирнее */
+  color: #333; /* Нейтральный темный цвет */
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-input {
+  margin-bottom: 20px; /* Увеличен отступ между полями */
+  padding: 12px; /* Увеличен внутренний отступ */
+  font-size: 16px;
+  border: 1px solid #ddd; /* Светлая рамка */
+  border-radius: 6px; /* Мягкие углы */
+  width: 100%;
+  box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.05); /* Легкая внутренняя тень */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Плавная анимация */
+}
+
+.auth-input:focus {
+  border-color: #ffeb3b; /* Подсветка рамки при фокусе */
+  box-shadow: 0 0 6px rgba(255, 235, 59, 0.6); /* Легкая желтая подсветка */
+  outline: none; /* Убираем стандартную подсветку */
+}
+
+.auth-button {
+  padding: 12px; /* Размер кнопки */
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #ffeb3b; /* Ярко-желтый фон */
+  color: black; /* Черный текст */
+  border: none;
+  border-radius: 6px; /* Мягкие углы */
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s ease; /* Плавная смена цвета */
+}
+
+.auth-button:hover {
+  background-color: #fdd835; /* Чуть темнее при наведении */
+}
+.auth-button:active {
+  background-color: #fbc02d; /* Еще чуть темнее при клике */
+}
+
+
+
+
+.link-button {
+  padding: 0px 12px; /* Еще уменьшены отступы по вертикали */
+  background-color: #ffeb3b; /* Цвет фона - желтый */
+  border-radius: 4px; /* Округленные углы */
+  border: 1px solid #ffeb3b; /* Граница того же цвета */
+  cursor: pointer; /* Указатель курсора при наведении */
+  text-decoration: none; /* Убираем подчеркивание */
+  font-size: 14px; /* Размер шрифта */
+  color: black; /* Черный цвет текста */
+  display: inline-flex; /* Используем flexbox для центрирования */
+  align-items: center; /* Вертикальное выравнивание по центру */
+  justify-content: center; /* Горизонтальное выравнивание по центру */
+  white-space: nowrap; /* Запрещаем перенос текста на новую строку */
+  transition: background-color 0.3s; /* Плавное изменение фона */
+  margin-left: 16px; /* Отступ от кнопки Найти */
+}
+
+.link-button:hover {
+  background-color: #fdd835; /* Цвет фона при наведении */
+}
+
+.link-button:focus {
+  outline: none; /* Убираем обводку при фокусировке */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.cards-container-monthly-cashbacks {
+  margin-top: 45px;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0 20px 100px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.card-monthly-cashbacks {
+  width: 85%; /* Уменьшена ширина карточки */
+  max-width: 600px; /* Уменьшена максимальная ширина карточки */
+  height: auto;
+  padding: 15px;
+  background-color: #fff;
+  border: 1px solid #ffeb3b; /* Жёлтая рамка */
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Мягкая тень */
+  text-align: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  position: relative;
+}
+
+.card-image-container-monthly-cashbacks {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.card-image-monthly-cashbacks {
+  width: 100%;
+  max-width: 200px; /* Уменьшена максимальная ширина изображения */
+  height: 100px; /* Уменьшена высота изображения */
+  object-fit: contain;
+  margin-top: 20px;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: space-between; /* Размещаем элементы по краям */
+  align-items: center;
+  gap: 10px;
+  margin-top: auto; /* Располагаем элементы внизу карточки */
+  width: 100%; /* Растягиваем на всю ширину карточки */
+}
+
+.total-spent-input {
+  width: 120px; /* Размер совпадает с кнопкой */
+  padding: 10px;
+  border: 1px solid #ffeb3b; /* Жёлтая рамка */
+  border-radius: 4px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.total-spent-input:focus {
+  border-color: #ffeb3b;
+  outline: none;
+  box-shadow: 0 0 4px rgba(255, 235, 59, 0.5);
+}
+
+.delete-button {
+  background-color: #ff4d4d; /* Красный цвет */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 14px;
+  flex-shrink: 0; /* Кнопка не уменьшается */
+}
+
+.delete-button:hover {
+  background-color: #d93636; /* Темнее при наведении */
+}
+
+
+
+
+
