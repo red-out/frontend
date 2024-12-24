@@ -10,6 +10,7 @@ import Login from './pages/login';
 import Register from './pages/register';
 import Profile from './pages/profile';
 import MonthlyCashbacksPage from './pages/MonthlyCashbacks'
+import LastCashbacks from './pages/LastCashbacks'
 
 const router = createBrowserRouter(
   [
@@ -40,6 +41,10 @@ const router = createBrowserRouter(
     {
       path: '/monthly_cashbacks',
       element: <MonthlyCashbacksPage />,
+    },
+    {
+      path: '/past_cashbacks',
+      element: <LastCashbacks />,
     },
   ],
   {
