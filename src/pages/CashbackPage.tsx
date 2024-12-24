@@ -6,6 +6,7 @@ import Navbar from "../components/Navbar";
 import { setSearchTerm } from '../slices/cashbackSlice';
 import { Api } from "../api/Api";
 import axios from 'axios';
+import mockData from '../mocks/cashbackData'; // Импортируем моки
 import '../assets/style.css';
 
 interface CashbackService {
@@ -48,6 +49,7 @@ const CashbackPage: React.FC = () => {
   const fetchData = async (search: string = '') => {
     setLoading(true);
     setError(null);
+
     try {
       const response = await axios.get(`/cashback_services`, {
         params: { search },
@@ -63,7 +65,8 @@ const CashbackPage: React.FC = () => {
       setCashbacksCount(draftOrder ? draftOrder.cashbacks_count : 0);
     } catch (err) {
       console.error(err);
-      setError('Не удалось загрузить данные.');
+      setError('Сервер недоступен. Загружаются данные по умолчанию.');
+      setFilteredServices(mockData); // Используем импортированные моки
     } finally {
       setLoading(false);
     }
@@ -91,10 +94,9 @@ const CashbackPage: React.FC = () => {
           'Session-ID': sessionId,
         },
       });
-      alert(`Услуга с ID ${serviceId} успешно добавлена в кешбэк.`);
+      fetchData(inputValue); // Обновляем данные после успешного добавления
     } catch (error: any) {
       if (error.response && error.response.status === 409) {
-        alert('Категория уже добавлена!');
       } else {
         console.error(error);
         alert('Категория уже добавлена!');
@@ -129,7 +131,7 @@ const CashbackPage: React.FC = () => {
           <button type="submit" className="search-button">Найти</button>
           <Link
             to={draftOrderId ? `/monthly_cashbacks?draft_order_id=${draftOrderId}` : '#'}
-            className="search-button link-button"
+            className={`search-button link-button ${!isAuthenticated || !draftOrderId ? 'btn-disabled' : ''}`}
             style={{ pointerEvents: isAuthenticated && draftOrderId ? 'auto' : 'none' }}
           >
             Ваши кешбэки{cashbacksCount ? `: ${cashbacksCount}` : ''}
@@ -156,7 +158,7 @@ const CashbackPage: React.FC = () => {
                 <p>{service.cashback_percentage_text}</p>
               </Link>
               <button
-                className="btn btn-secondary"
+                className={`btn btn-secondary ${!isAuthenticated ? 'btn-disabled' : ''}`}
                 onClick={() => handleAddToDraft(service.id)}
                 disabled={!isAuthenticated}
                 style={{ pointerEvents: isAuthenticated ? 'auto' : 'none' }}
@@ -174,8 +176,6 @@ const CashbackPage: React.FC = () => {
 };
 
 export default CashbackPage;
-
-
 
 // import React, { useEffect, useState, useRef } from 'react';
 // import { Link } from 'react-router-dom';
@@ -217,6 +217,13 @@ export default CashbackPage;
 //     }
 //   }, [sessionId]);
 
+//   useEffect(() => {
+//     if (!isAuthenticated) {
+//       document.cookie = `session_id=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
+//       console.log('Кука session_id удалена');
+//     }
+//   }, [isAuthenticated]);
+
 //   const fetchData = async (search: string = '') => {
 //     setLoading(true);
 //     setError(null);
@@ -251,8 +258,8 @@ export default CashbackPage;
 
 //   const handleSearch = (e: React.FormEvent) => {
 //     e.preventDefault();
-//     dispatch(setSearchTerm(inputValue)); // Обновляем состояние в Redux
-//     fetchData(inputValue); // Загружаем данные с новым запросом
+//     dispatch(setSearchTerm(inputValue));
+//     fetchData(inputValue);
 //   };
 
 //   const handleAddToDraft = async (serviceId: number) => {
@@ -263,10 +270,14 @@ export default CashbackPage;
 //           'Session-ID': sessionId,
 //         },
 //       });
-//       alert(`Услуга с ID ${serviceId} успешно добавлена в кешбэк.`);
-//     } catch (error) {
-//       console.error(error);
-//       alert('Ошибка при добавлении услуги в кешбэк.');
+//       fetchData(inputValue); // Обновляем данные после успешного добавления
+//     } catch (error: any) {
+//       if (error.response && error.response.status === 409) {
+//         alert('Категория уже добавлена!');
+//       } else {
+//         console.error(error);
+//         alert('Категория уже добавлена!');
+//       }
 //     }
 //   };
 
@@ -297,7 +308,7 @@ export default CashbackPage;
 //           <button type="submit" className="search-button">Найти</button>
 //           <Link
 //             to={draftOrderId ? `/monthly_cashbacks?draft_order_id=${draftOrderId}` : '#'}
-//             className="search-button link-button"
+//             className={`search-button link-button ${!isAuthenticated || !draftOrderId ? 'btn-disabled' : ''}`}
 //             style={{ pointerEvents: isAuthenticated && draftOrderId ? 'auto' : 'none' }}
 //           >
 //             Ваши кешбэки{cashbacksCount ? `: ${cashbacksCount}` : ''}
@@ -324,7 +335,7 @@ export default CashbackPage;
 //                 <p>{service.cashback_percentage_text}</p>
 //               </Link>
 //               <button
-//                 className="btn btn-secondary"
+//                 className={`btn btn-secondary ${!isAuthenticated ? 'btn-disabled' : ''}`}
 //                 onClick={() => handleAddToDraft(service.id)}
 //                 disabled={!isAuthenticated}
 //                 style={{ pointerEvents: isAuthenticated ? 'auto' : 'none' }}
@@ -342,3 +353,4 @@ export default CashbackPage;
 // };
 
 // export default CashbackPage;
+
