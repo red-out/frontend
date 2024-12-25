@@ -47,9 +47,7 @@ const router = createBrowserRouter(
       element: <LastCashbacks />,
     },
   ],
-  {
-    basename: '/frontend',
-  }
+
 );
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

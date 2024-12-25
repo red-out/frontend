@@ -55,10 +55,7 @@ const MonthlyCashbacksPage: React.FC = () => {
         },
       });
 
-      if (response.data) {
-        const { services } = response.data;
-        setCashbackServices(services || []);
-      }
+
     } catch (err) {
       console.error('Ошибка при загрузке данных:', err);
       setError('Ошибка при загрузке данных.');
@@ -544,4 +541,3 @@ export default MonthlyCashbacksPage;
 // };
 
 // export default MonthlyCashbacksPage;
-

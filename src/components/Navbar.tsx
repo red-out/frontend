@@ -7,6 +7,15 @@ import { setSearchTerm } from '../slices/cashbackSlice';
 import { Api } from '../api/Api'; // Предполагается, что это ваша настроенная API-библиотека
 import '../assets/style.css';
 
+// Типы данных для API
+interface Service {
+  service_id: string;
+}
+
+interface DraftDetails {
+  services: Service[];
+}
+
 const Navbar: React.FC = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dispatch = useDispatch();
@@ -38,15 +47,7 @@ const Navbar: React.FC = () => {
         },
       });
 
-      if (!servicesResponse || !servicesResponse.data) {
-        console.warn('Ответ от API пустой или некорректный.');
-        return;
-      }
-
-      const services = Array.isArray(servicesResponse.data)
-        ? servicesResponse.data
-        : [];
-
+      const services = Array.isArray(servicesResponse?.data) ? servicesResponse.data : [];
       const draftInfo = services.find((item: any) => item.draft_order_id !== undefined);
       if (!draftInfo || !draftInfo.draft_order_id) {
         console.warn('Черновик не найден.');
@@ -63,20 +64,21 @@ const Navbar: React.FC = () => {
         },
       });
 
-      if (!draftDetailsResponse || !draftDetailsResponse.data || !draftDetailsResponse.data.services) {
-        console.warn('Список услуг (services) отсутствует или некорректен.');
+      if (!draftDetailsResponse || typeof draftDetailsResponse.data !== 'object') {
+        console.warn('Некорректный ответ от API при запросе деталей черновика.');
         return;
       }
 
-      const servicesToDelete = draftDetailsResponse.data.services;
-      console.log('Список кешбэков для удаления:', servicesToDelete);
+      const draftDetails = draftDetailsResponse.data as DraftDetails;
 
-      if (servicesToDelete.length === 0) {
+      if (!draftDetails.services || draftDetails.services.length === 0) {
         console.log('Нет кешбэков для удаления.');
         return;
       }
 
-      for (const service of servicesToDelete) {
+      console.log('Список кешбэков для удаления:', draftDetails.services);
+
+      for (const service of draftDetails.services) {
         console.log(`Попытка удалить кешбэк с service_id: ${service.service_id}`);
         await api.cashbacksOrders.cashbacksOrdersServicesDeleteDelete(
           draftOrderId,
@@ -185,6 +187,7 @@ const Navbar: React.FC = () => {
 };
 
 export default Navbar;
+
 
 
 

@@ -57,8 +57,8 @@ const LastCashbacks: React.FC = () => {
             'Session-ID': sessionId,
           },
         });
-        if (!didCancel) {
-          setOrders(response.data);
+        if (!didCancel && response && Array.isArray(response.data)) {
+          setOrders(response.data as CashbackOrder[]);
         }
       } catch (err) {
         if (!didCancel) {
@@ -172,6 +172,7 @@ const LastCashbacks: React.FC = () => {
 };
 
 export default LastCashbacks;
+
 
 // import React, { useEffect, useState } from 'react';
 // import { useSelector } from 'react-redux';

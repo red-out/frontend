@@ -7,6 +7,12 @@ import Breadcrumb from "../components/BreadCrumbs";
 import { Link, useNavigate } from "react-router-dom";
 import "../assets/style.css";
 
+interface LoginResponse {
+  status: string;
+  session_id?: string;
+  id?: number; // Убедитесь, что id действительно возвращается как число.
+}
+
 const Login = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -28,21 +34,20 @@ const Login = () => {
         { withCredentials: true }
       );
 
-      console.log("Полный ответ API:", response); // Логируем полный ответ API
-      console.log("response.data:", response.data); // Логируем data из ответа
+      console.log("Полный ответ API:", response);
 
-      if (response.data?.status === "ok") {
-        const { session_id, id } = response.data; // Получаем session_id и id из ответа
+      const data: LoginResponse = response.data; // Приводим `response.data` к типу LoginResponse.
 
-        console.log("Устанавливаем session_id и id в Redux:", session_id, id); // Логируем session_id и id
+      if (data?.status === "ok" && data.session_id && data.id !== undefined) {
+        console.log("Устанавливаем session_id и id в Redux:", data.session_id, data.id);
 
-        dispatch(login({ id, username: email, sessionId: session_id }));
+        dispatch(login({ id: String(data.id), username: email, sessionId: data.session_id }));
         navigate("/");
       } else {
         setError("Не удалось войти. Проверьте данные и попробуйте снова.");
       }
     } catch (err) {
-      console.error("Ошибка при выполнении запроса:", err); // Логируем ошибку
+      console.error("Ошибка при выполнении запроса:", err);
       setError("Ошибка при аутентификации. Попробуйте позже.");
     } finally {
       setLoading(false);
@@ -51,7 +56,7 @@ const Login = () => {
 
   const breadcrumbItems = [
     { label: "Главная", path: "/" },
-    { label: 'Список кешбэков', path: '/cashbacks' },
+    { label: "Список кешбэков", path: "/cashbacks" },
     { label: "Вход", path: "/login" },
   ];
 
@@ -101,3 +106,8 @@ const Login = () => {
 };
 
 export default Login;
+
+
+
+
+
