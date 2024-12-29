@@ -500,55 +500,63 @@ form button:hover {
     font-size: 0.9rem;
   }
 }
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #fff;
 
-.hamburger-button {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: #333; /* Цвет иконки */
-  transition: color 0.3s ease; /* Плавный переход цвета при наведении */
 }
 
-.hamburger-button:hover {
-  color: #ffae00; /* Цвет при наведении */
+.desktop-menu {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.desktop-menu li {
+  font-size: 1rem;
+}
+
+.desktop-menu a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.desktop-menu a:hover {
+  color: #ffae00; /* Цвет ссылки при наведении */
+}
+
+/* Бургер-меню для телефонов */
+.hamburger-button {
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  display: none; /* Скрыть бургер-кнопку на больших экранах */
 }
 
 .dropdown-menu {
-  position: absolute;
-  top: 3rem;
-  right: 1rem;
-  background: #fff;
-  border: none;
-  border-radius: 8px; /* Более мягкие углы */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Легкая тень для выделения */
-  padding: 0.5rem 0;
-  list-style: none;
-  z-index: 10;
-  width: 200px; /* Ширина меню */
+  display: none; /* Убираем dropdown меню для больших экранов */
 }
 
-.dropdown-menu li {
-  padding: 0.75rem 1rem;
-  font-size: 1rem; /* Увеличиваем шрифт для лучшей читаемости */
-  color: #333;
-  transition: background-color 0.3s ease; /* Плавный переход фона при наведении */
+/* Медиа-запросы для телефонов */
+@media (max-width: 768px) {
+  .desktop-menu {
+    display: none; /* Прячем горизонтальное меню на телефонах */
+  }
+
+  .hamburger-button {
+    display: block; /* Показываем бургер-кнопку на телефонах */
+  }
 }
 
-.dropdown-menu li:hover {
-  background-color: #f1f1f1; /* Легкий фон при наведении */
-}
-
-.dropdown-menu a {
-  text-decoration: none;
-  color: inherit; /* Наследуем цвет родителя */
-  display: block;
-  font-weight: 500;
-}
-
-.dropdown-menu a:hover {
-  color: #ffae00; /* Цвет ссылки при наведении */
-}
 
 
 
