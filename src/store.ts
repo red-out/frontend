@@ -1,11 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
-import searchReducer from './slices/cashbackSlice'; // Ваш текущий редьюсер
-import authReducer from './slices/authSlice'; // Добавляем authSlice
+import cashbackReducer from './slices/cashbackSlice'; // Cashback reducer
+import authReducer from './slices/authSlice'; // Auth reducer
+import userReducer from './slices/userSlice'; // User reducer
+import monthlyCashbacksReducer from './slices/monthlyCashbacksSlice'; // MonthlyCashbacks reducer
 
 const store = configureStore({
   reducer: {
-    search: searchReducer, // Сохраняем текущий редьюсер
-    auth: authReducer, // Добавляем редьюсер для авторизации
+    cashback: cashbackReducer,
+    auth: authReducer,
+    user: userReducer,
+    cashbacks: monthlyCashbacksReducer, // Добавляем reducer для monthlyCashbacks
   },
 });
 
@@ -15,10 +19,11 @@ export default store;
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
+// Типизированные хуки для использования в компонентах
+import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
 
-
-
-
+export const useAppDispatch = () => useDispatch<AppDispatch>();
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 
 

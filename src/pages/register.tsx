@@ -1,57 +1,37 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { registerUser } from '../slices/userSlice';
+import { RootState } from '../store';
 import Navbar from '../components/Navbar'; // Шапка
 import Breadcrumb from '../components/BreadCrumbs'; // Хлебные крошки
 import { Link } from 'react-router-dom'; // Навигация
 import '../assets/style.css'; // Стили
-import { Api } from '../api/Api'; // Импортируем сгенерированный API
-import { AxiosResponse } from 'axios'; // Для уточнения типа ответа от сервера
 
 const Register: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
-  const [success, setSuccess] = useState<string>('');
-
-  const api = new Api();
-
-  const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (password !== confirmPassword) {
-      setError('Пароли не совпадают');
-      return;
-    }
-
-    setLoading(true);
-    setError('');
-    setSuccess('');
-
-    try {
-      const response: AxiosResponse = await api.api.apiUserCreate({
-        email,
-        password,
-      });
-
-      if (response.status === 200) {
-        setSuccess('Регистрация прошла успешно! Теперь вы можете войти.');
-      } else {
-        setError('Не удалось зарегистрировать пользователя. Попробуйте позже.');
-      }
-    } catch (err) {
-      setError('Ошибка при регистрации. Попробуйте позже.');
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const dispatch = useDispatch();
+  const { loading, registrationError, registrationSuccess } = useSelector(
+    (state: RootState) => state.user
+  );
 
   const breadcrumbItems = [
     { label: 'Главная', path: '/' },
     { label: 'Список кешбэков', path: '/cashbacks' },
     { label: 'Регистрация', path: '/register' },
   ];
+
+  const handleRegister = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (password !== confirmPassword) {
+      alert('Пароли не совпадают');
+      return;
+    }
+
+    dispatch(registerUser({ email, password }));
+  };
 
   return (
     <div className="auth-page">
@@ -73,35 +53,43 @@ const Register: React.FC = () => {
 
       <div className="auth-container">
         <h2>Регистрация</h2>
-        {success ? (
-          <p className="success-message">{success}</p>
+        {registrationSuccess ? (
+          <p className="success-message">{registrationSuccess}</p>
         ) : (
           <form onSubmit={handleRegister} className="auth-form">
-            {error && <p className="error-message">{error}</p>}
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="auth-input"
-            />
-            <input
-              type="password"
-              placeholder="Пароль"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="auth-input"
-            />
-            <input
-              type="password"
-              placeholder="Подтвердите пароль"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-              className="auth-input"
-            />
+            {registrationError && <p className="error-message">{registrationError}</p>}
+            
+            <div className="input-container">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email"
+                required
+                className="auth-input"
+              />
+            </div>
+            <div className="input-container">
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Пароль"
+                required
+                className="auth-input"
+              />
+            </div>
+            <div className="input-container">
+              <input
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Подтверждение пароля"
+                required
+                className="auth-input"
+              />
+            </div>
+
             <button type="submit" disabled={loading} className="auth-button">
               {loading ? 'Загрузка...' : 'Зарегистрироваться'}
             </button>
@@ -113,4 +101,122 @@ const Register: React.FC = () => {
 };
 
 export default Register;
+
+
+
+// import React, { useState } from 'react';
+// import Navbar from '../components/Navbar'; // Шапка
+// import Breadcrumb from '../components/BreadCrumbs'; // Хлебные крошки
+// import { Link } from 'react-router-dom'; // Навигация
+// import '../assets/style.css'; // Стили
+// import { Api } from '../api/Api'; // Импортируем сгенерированный API
+// import { AxiosResponse } from 'axios'; // Для уточнения типа ответа от сервера
+
+// const Register: React.FC = () => {
+//   const [email, setEmail] = useState('');
+//   const [password, setPassword] = useState('');
+//   const [confirmPassword, setConfirmPassword] = useState('');
+//   const [error, setError] = useState<string>('');
+//   const [loading, setLoading] = useState<boolean>(false);
+//   const [success, setSuccess] = useState<string>('');
+
+//   const api = new Api();
+
+//   const handleRegister = async (e: React.FormEvent) => {
+//     e.preventDefault();
+
+//     if (password !== confirmPassword) {
+//       setError('Пароли не совпадают');
+//       return;
+//     }
+
+//     setLoading(true);
+//     setError('');
+//     setSuccess('');
+
+//     try {
+//       const response: AxiosResponse = await api.api.apiUserCreate({
+//         email,
+//         password,
+//       });
+
+//       if (response.status === 200) {
+//         setSuccess('Регистрация прошла успешно! Теперь вы можете войти.');
+//       } else {
+//         setError('Не удалось зарегистрировать пользователя. Попробуйте позже.');
+//       }
+//     } catch (err) {
+//       setError('Ошибка при регистрации. Попробуйте позже.');
+//       console.error(err);
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   const breadcrumbItems = [
+//     { label: 'Главная', path: '/' },
+//     { label: 'Список кешбэков', path: '/cashbacks' },
+//     { label: 'Регистрация', path: '/register' },
+//   ];
+
+//   return (
+//     <div className="auth-page">
+//       {/* Шапка */}
+//       <header className="mb-4">
+//         <div className="header-content">
+//           <Link to="/" className="logo">
+//             <div className="mega">MEGA</div>
+//             <div className="bonus">BONUS</div>
+//           </Link>
+//           <Navbar />
+//         </div>
+//       </header>
+
+//       {/* Хлебные крошки */}
+//       <div className="breadcrumb-container">
+//         <Breadcrumb items={breadcrumbItems} />
+//       </div>
+
+//       <div className="auth-container">
+//         <h2>Регистрация</h2>
+//         {success ? (
+//           <p className="success-message">{success}</p>
+//         ) : (
+//           <form onSubmit={handleRegister} className="auth-form">
+//             {error && <p className="error-message">{error}</p>}
+//             <input
+//               type="email"
+//               placeholder="Email"
+//               value={email}
+//               onChange={(e) => setEmail(e.target.value)}
+//               required
+//               className="auth-input"
+//             />
+//             <input
+//               type="password"
+//               placeholder="Пароль"
+//               value={password}
+//               onChange={(e) => setPassword(e.target.value)}
+//               required
+//               className="auth-input"
+//             />
+//             <input
+//               type="password"
+//               placeholder="Подтвердите пароль"
+//               value={confirmPassword}
+//               onChange={(e) => setConfirmPassword(e.target.value)}
+//               required
+//               className="auth-input"
+//             />
+//             <button type="submit" disabled={loading} className="auth-button">
+//               {loading ? 'Загрузка...' : 'Зарегистрироваться'}
+//             </button>
+//           </form>
+//         )}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Register;
 

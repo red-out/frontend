@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Breadcrumb from '../components/BreadCrumbs';
 import { RootState } from '../store';
-import { Api } from '../api/Api';
+import { fetchCashbackOrders } from '../slices/cashbackSlice';  // Импортируем thunk
+import { AppDispatch } from '../store'; // Импортируем тип AppDispatch
 import '../assets/style.css';
 
 interface CashbackOrder {
@@ -37,58 +38,17 @@ const monthNames: { [key: string]: string } = {
 const LastCashbacks: React.FC = () => {
   const sessionId = useSelector((state: RootState) => state.auth.sessionId);
   const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
-  const [orders, setOrders] = useState<CashbackOrder[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const api = new Api();
+  const orders = useSelector((state: RootState) => state.cashback.orders); // Считываем данные из store
+  const loading = useSelector((state: RootState) => state.cashback.loading); // Считываем статус загрузки
+  const error = useSelector((state: RootState) => state.cashback.error); // Считываем ошибки
+  const dispatch = useDispatch<AppDispatch>(); // Инициализируем dispatch
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (sessionId) {
-      // Устанавливаем куку session_id
-      document.cookie = `session_id=${sessionId}; path=/; secure; samesite=Strict;`;
-      console.log('Кука session_id установлена:', document.cookie);
+    if (sessionId && isAuthenticated) {
+      dispatch(fetchCashbackOrders()); // Диспатчим thunk для загрузки заказов (без передачи sessionId)
     }
-  }, [sessionId]);
-
-  useEffect(() => {
-    let didCancel = false;
-
-    const fetchCashbackOrders = async () => {
-      setLoading(true);
-      setError(null);
-
-      try {
-        const response = await api.cashbackOrders.cashbackOrdersList({
-          headers: {
-            'Content-Type': 'application/json',
-            'Session-ID': sessionId, // Используем sessionId из куки
-          },
-          withCredentials: true,  // Передаем куки с запросом
-        });
-        if (!didCancel) {
-          setOrders(response.data);
-        }
-      } catch (err) {
-        if (!didCancel) {
-          console.error('API Error:', err);
-          setError('Не удалось загрузить данные.');
-        }
-      } finally {
-        if (!didCancel) {
-          setLoading(false);
-        }
-      }
-    };
-
-    if (isAuthenticated) {
-      fetchCashbackOrders();
-    }
-
-    return () => {
-      didCancel = true;
-    };
-  }, [isAuthenticated, sessionId]);
+  }, [sessionId, isAuthenticated, dispatch]);
 
   const formatDate = (date: string | null) =>
     date ? new Date(date).toLocaleString() : 'Не указана';
@@ -137,7 +97,7 @@ const LastCashbacks: React.FC = () => {
 
       {!isAuthenticated ? (
         <div className="unauthorized-message">Пожалуйста, авторизуйтесь, чтобы увидеть прошлые кешбэки.</div>
-      ) : loading ? (
+      ) : loading === 'pending' ? (
         <div className="spinner">Загрузка...</div>
       ) : error ? (
         <div className="error">{error}</div>
@@ -181,5 +141,7 @@ const LastCashbacks: React.FC = () => {
 };
 
 export default LastCashbacks;
+
+
 
 
